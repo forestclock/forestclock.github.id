@@ -4,20 +4,31 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>clockfroest的博客</title>
+    <title>JVM 类加载机制 | clockfroest的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Clock forest">
     
 
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="clockfroest的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+    <meta name="description" content="一、JVM类加载过程1.1 JVM的类加载机制介绍&amp;emsp;&amp;emsp;Java代码编译之后，生成JVM能识别的二进制字节码文件（*.class）,JVM把Class文件中的类描述数据从文件加载到内存中，并对数据进行校验、转换解析、初始化，把这些数据最终成为可以被JVM直接使用的Java类型，这一过程成为JVM的类加载。 &amp;emsp;&amp;emsp;Class文件中的“类”从加载到JVM内存中，到卸">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM 类加载机制">
+<meta property="og:url" content="http://yoursite.com/2017/11/10/JVM-类加载机制/index.html">
 <meta property="og:site_name" content="clockfroest的博客">
+<meta property="og:description" content="一、JVM类加载过程1.1 JVM的类加载机制介绍&amp;emsp;&amp;emsp;Java代码编译之后，生成JVM能识别的二进制字节码文件（*.class）,JVM把Class文件中的类描述数据从文件加载到内存中，并对数据进行校验、转换解析、初始化，把这些数据最终成为可以被JVM直接使用的Java类型，这一过程成为JVM的类加载。 &amp;emsp;&amp;emsp;Class文件中的“类”从加载到JVM内存中，到卸">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/process_of_classload.jpg">
+<meta property="og:image" content="http://yoursite.com/img/classload.jpg">
+<meta property="og:image" content="http://yoursite.com/img/result.jpg">
+<meta property="og:image" content="http://yoursite.com/img/changeresult.jpg">
+<meta property="og:image" content="http://yoursite.com/img/myclassloader.jpg">
+<meta property="og:updated_time" content="2017-11-10T07:42:38.988Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="clockfroest的博客">
+<meta name="twitter:title" content="JVM 类加载机制">
+<meta name="twitter:description" content="一、JVM类加载过程1.1 JVM的类加载机制介绍&amp;emsp;&amp;emsp;Java代码编译之后，生成JVM能识别的二进制字节码文件（*.class）,JVM把Class文件中的类描述数据从文件加载到内存中，并对数据进行校验、转换解析、初始化，把这些数据最终成为可以被JVM直接使用的Java类型，这一过程成为JVM的类加载。 &amp;emsp;&amp;emsp;Class文件中的“类”从加载到JVM内存中，到卸">
+<meta name="twitter:image" content="http://yoursite.com/img/process_of_classload.jpg">
 
     
     <link rel="alternative" href="/atom.xml" title="clockfroest的博客" type="application/atom+xml">
@@ -71,12 +82,10 @@
 </div>
     </header>
     <div id="container">
-      <div id="main">
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/2017/11/10/JVM-类加载机制/" title="JVM 类加载机制" itemprop="url">JVM 类加载机制</a>
@@ -90,9 +99,16 @@
     
   </p>
 </header>
-    <div class="article-content">
-        
-        <h1 id="一、JVM类加载过程"><a href="#一、JVM类加载过程" class="headerlink" title="一、JVM类加载过程"></a>一、JVM类加载过程</h1><h2 id="1-1-JVM的类加载机制介绍"><a href="#1-1-JVM的类加载机制介绍" class="headerlink" title="1.1 JVM的类加载机制介绍"></a>1.1 JVM的类加载机制介绍</h2><p>&emsp;&emsp;Java代码编译之后，生成JVM能识别的二进制字节码文件（*.class）,JVM把Class文件中的类描述数据从文件加载到内存中，并对数据进行校验、转换解析、初始化，把这些数据最终成为可以被JVM直接使用的Java类型，这一过程成为JVM的类加载。</p>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、JVM类加载过程"><span class="toc-number">1.</span> <span class="toc-text">一、JVM类加载过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-JVM的类加载机制介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 JVM的类加载机制介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类的加载"><span class="toc-number">1.1.1.</span> <span class="toc-text">类的加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类的连接"><span class="toc-number">1.1.2.</span> <span class="toc-text">类的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类的初始化"><span class="toc-number">1.1.3.</span> <span class="toc-text">类的初始化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM类加载器与双亲委派模型"><span class="toc-number">1.2.</span> <span class="toc-text">JVM类加载器与双亲委派模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM类加载类型"><span class="toc-number">1.2.1.</span> <span class="toc-text">JVM类加载类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双亲委派类加载机制"><span class="toc-number">1.2.2.</span> <span class="toc-text">双亲委派类加载机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双亲委派模型的好处："><span class="toc-number">1.2.3.</span> <span class="toc-text">双亲委派模型的好处：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双亲委派模型源码"><span class="toc-number">1.2.4.</span> <span class="toc-text">双亲委派模型源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义类加载器"><span class="toc-number">1.2.5.</span> <span class="toc-text">自定义类加载器</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="一、JVM类加载过程"><a href="#一、JVM类加载过程" class="headerlink" title="一、JVM类加载过程"></a>一、JVM类加载过程</h1><h2 id="1-1-JVM的类加载机制介绍"><a href="#1-1-JVM的类加载机制介绍" class="headerlink" title="1.1 JVM的类加载机制介绍"></a>1.1 JVM的类加载机制介绍</h2><p>&emsp;&emsp;Java代码编译之后，生成JVM能识别的二进制字节码文件（*.class）,JVM把Class文件中的类描述数据从文件加载到内存中，并对数据进行校验、转换解析、初始化，把这些数据最终成为可以被JVM直接使用的Java类型，这一过程成为JVM的类加载。</p>
 <p>&emsp;&emsp;Class文件中的“类”从加载到JVM内存中，到卸载出内存过程有七个生命周期阶段。类加载机制包括了前五个阶段。其中，加载、验证、准备、初始化、卸载的开始顺序是确定的，注意，只是按顺序开始，进行与结束的顺序并不一定。解析阶段可能在初始化之后开始。</p>
 <p>&emsp;&emsp;另外，类加载无需等到程序中“首次使用”的时候才开始，JVM预先加载某些类也是被允许的。（类加载的时机）<br><img src="/img/process_of_classload.jpg" alt="image"></p>
 <h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><p>平时说的加载不是指类的加载机制，只是类加载机制中的第一步——加载。主要完成3件事：</p>
@@ -159,14 +175,9 @@
 <p>编写一个MyclassLoader, 继承自ClassLoader, 并重写findClass方法，defineClass方法可以把二进制流字节组成的文件转换为一个java.lang.Class（只要二进制字节流的内容符合Class文件规范）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">public class MyClassLoader extends ClassLoader&#123;</div><div class="line">	</div><div class="line">	public MyClassLoader() &#123;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public MyClassLoader(ClassLoader parent)&#123;</div><div class="line">		super(parent);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	@Override</div><div class="line">	protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException &#123;</div><div class="line">		</div><div class="line">		File file = new File(&quot;D:\\Person.class&quot;);</div><div class="line">		try &#123;</div><div class="line">			byte [] bytes = getClassBytes(file);</div><div class="line">			Class&lt;?&gt; c = this.defineClass(name, bytes, 0, bytes.length);</div><div class="line">			return c;</div><div class="line">		&#125; catch (Exception e) &#123;</div><div class="line">			// TODO Auto-generated catch block</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		return super.findClass(name);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	private byte[] getClassBytes(File file) throws Exception &#123;</div><div class="line">		</div><div class="line">		//读入 .class的字节，因此需要使用字节流</div><div class="line">		FileInputStream inputStream = new FileInputStream(file);</div><div class="line">		FileChannel fc = inputStream.getChannel();</div><div class="line">		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();</div><div class="line">		WritableByteChannel wbc = Channels.newChannel(outputStream);</div><div class="line">		ByteBuffer buffer = ByteBuffer.allocate(1024);</div><div class="line">		</div><div class="line">		while(true)&#123;</div><div class="line">			int i = fc.read(buffer);</div><div class="line">			if(i == 0 || i == -1)</div><div class="line">				break;</div><div class="line">			buffer.flip();</div><div class="line">			wbc.write(buffer);</div><div class="line">			buffer.clear();</div><div class="line">		&#125;</div><div class="line">		inputStream.close();</div><div class="line">		return outputStream.toByteArray();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	</div><div class="line">	public static void main(String[] args) throws Exception &#123;</div><div class="line">		MyClassLoader myClassLoader = new MyClassLoader();</div><div class="line">		Class&lt;?&gt; clazz = Class.forName(&quot;Person&quot;, true, myClassLoader);</div><div class="line">		Object object = clazz.newInstance();</div><div class="line">		System.out.println(object);</div><div class="line">		System.out.println(object.getClass().getClassLoader());</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>最后得到的运行结果如下图所示：</p>
 <p><img src="/img/myclassloader.jpg" alt="image"></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
+  
+	</div>
+		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 
@@ -179,245 +190,44 @@
 
 
 
-
-<div class="comments-count">
+	<div class="article-share" id="share">
 	
-</div>
+	  <div data-url="http://yoursite.com/2017/11/10/JVM-类加载机制/" data-title="JVM 类加载机制 | clockfroest的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
 
 </footer>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/11/10/Subarray-Product-Less-Than-k/" title="Subarray Product Less Than k" itemprop="url">Subarray Product Less Than k</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Clock forest" target="_blank" itemprop="author">Clock forest</a>
-		
-  <p class="article-time">
-    <time datetime="2017-11-10T07:17:35.000Z" itemprop="datePublished"> 发表于 2017-11-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="713-Subarray-Product-Less-Than-K"><a href="#713-Subarray-Product-Less-Than-K" class="headerlink" title="713. Subarray Product Less Than K"></a>713. Subarray Product Less Than K</h1><h4 id="description-Your-are-given-an-array-of-positive-integers-nums-Count-and-print-the-number-of-contiguous-subarrays-where-the-product-of-all-the-elements-in-the-subarray-is-less-than-k"><a href="#description-Your-are-given-an-array-of-positive-integers-nums-Count-and-print-the-number-of-contiguous-subarrays-where-the-product-of-all-the-elements-in-the-subarray-is-less-than-k" class="headerlink" title="description  Your are given an array of positive integers nums. Count and print the number of (contiguous) subarrays where the product of all the elements in the subarray is less than k."></a>description  Your are given an array of positive integers nums. Count and print the number of (contiguous) subarrays where the product of all the elements in the subarray is less than k.</h4><h4 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1:"></a>Example 1:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Input: nums = [10, 5, 2, 6], k = 100</div><div class="line">Output: 8</div><div class="line">Explanation: The 8 subarrays that have product less than 100 are: [10], [5], [2], [6], [10, 5], [5, 2], [2, 6], [5, 2, 6].</div><div class="line">Note that [10, 5, 2] is not included as the product of 100 is not strictly less than k.</div></pre></td></tr></table></figure>
-<h4 id="解题代码"><a href="#解题代码" class="headerlink" title="解题代码"></a>解题代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public int numSubarrayProductLessThanK(int[] nums, int k) &#123;</div><div class="line">		</div><div class="line">		int n = nums.length;</div><div class="line">		long product = 1l;</div><div class="line">		int count = 0;</div><div class="line">		int i =0, j =0;</div><div class="line">		while(i &lt; n)&#123;</div><div class="line">			product *= nums[i];</div><div class="line">			while(i &lt;= j &amp;&amp; product &gt;= k)&#123;</div><div class="line">				product /= nums[i];</div><div class="line">				i++;</div><div class="line">			&#125;</div><div class="line">			count += j-i+1;</div><div class="line">			j++;</div><div class="line">		&#125;</div><div class="line">		return count;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/**</div><div class="line">	 * brute force 暴力破解法, 计算数组都是1构成，大量时会超时;</div><div class="line">	 * 2017年11月7日上午11:39:02</div><div class="line">	 * TODO</div><div class="line">	 * ArrayProblem.java</div><div class="line">	 * @param nums</div><div class="line">	 * @param k</div><div class="line">	 * @return</div><div class="line">	 */</div><div class="line">	public int numSubarrayProductLessThanK2(int[] nums, int k) &#123;</div><div class="line">        int end = 0;</div><div class="line">        int count = 0;</div><div class="line">        long product =0;</div><div class="line">        for(int start =0;start &lt; nums.length;start++)&#123;</div><div class="line">            end = start;</div><div class="line">            product = 1;</div><div class="line">            while(end &lt;= nums.length - 1)&#123;</div><div class="line">                product *= nums[end];</div><div class="line">                if(product &lt; k)&#123;</div><div class="line">                	System.out.println(&quot;product@@@@@@@&quot; + product);</div><div class="line">                    count++;</div><div class="line">                &#125;else&#123;</div><div class="line">                	break;</div><div class="line">                &#125;</div><div class="line">                end++;</div><div class="line">            &#125;</div><div class="line">            System.out.println(&quot;******************************************count*************&quot; + count);</div><div class="line">        &#125;</div><div class="line">        return count;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/leetcode/">leetcode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
+   	       
+	</article>
 	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/11/10/Subarray-Product-Less-Than-k/"  title="Subarray Product Less Than k">
+ <strong>下一篇：</strong><br/> 
+ <span>Subarray Product Less Than k
+</span>
+</a>
 </div>
 
-</footer>
+</nav>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/11/10/Teemo-Attaction/" title="Teemo Attaction" itemprop="url">Teemo Attaction</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Clock forest" target="_blank" itemprop="author">Clock forest</a>
-		
-  <p class="article-time">
-    <time datetime="2017-11-10T07:08:03.000Z" itemprop="datePublished"> 发表于 2017-11-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="495-Teemo-Attacking"><a href="#495-Teemo-Attacking" class="headerlink" title="495. Teemo Attacking"></a>495. Teemo Attacking</h1><h5 id="问题描述-In-LOL-world-there-is-a-hero-called-Teemo-and-his-attacking-can-make-his-enemy-Ashe-be-in-poisoned-condition-Now-given-the-Teemo’s-attacking-ascending-time-series-towards-Ashe-and-the-poisoning-time-duration-per-Teemo’s-attacking-you-need-to-output-the-total-time-that-Ashe-is-in-poisoned-condition-You-may-assume-that-Teemo-attacks-at-the-very-beginning-of-a-specific-time-point-and-makes-Ashe-be-in-poisoned-condition-immediately"><a href="#问题描述-In-LOL-world-there-is-a-hero-called-Teemo-and-his-attacking-can-make-his-enemy-Ashe-be-in-poisoned-condition-Now-given-the-Teemo’s-attacking-ascending-time-series-towards-Ashe-and-the-poisoning-time-duration-per-Teemo’s-attacking-you-need-to-output-the-total-time-that-Ashe-is-in-poisoned-condition-You-may-assume-that-Teemo-attacks-at-the-very-beginning-of-a-specific-time-point-and-makes-Ashe-be-in-poisoned-condition-immediately" class="headerlink" title="问题描述:  In LOL world, there is a hero called Teemo and his attacking can make his enemy Ashe be in poisoned condition. Now, given the Teemo’s attacking ascending time series towards Ashe and the poisoning time duration per Teemo’s attacking, you need to output the total time that Ashe is in poisoned condition. You may assume that Teemo attacks at the very beginning of a specific time point, and makes Ashe be in poisoned condition immediately."></a>问题描述:  In LOL world, there is a hero called Teemo and his attacking can make his enemy Ashe be in poisoned condition. Now, given the Teemo’s attacking ascending time series towards Ashe and the poisoning time duration per Teemo’s attacking, you need to output the total time that Ashe is in poisoned condition. You may assume that Teemo attacks at the very beginning of a specific time point, and makes Ashe be in poisoned condition immediately.</h5><p><strong>Example 1:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Input: [1,4], 2</div><div class="line">Output: 4</div><div class="line">Explanation: At time point 1, Teemo starts attacking Ashe and makes Ashe be poisoned immediately. </div><div class="line">This poisoned status will last 2 seconds until the end of time point 2. </div><div class="line">And at time point 4, Teemo attacks Ashe again, and causes Ashe to be in poisoned status for another 2 seconds. </div><div class="line">So you finally need to output 4.</div></pre></td></tr></table></figure></p>
-<p><strong>Example 2:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Input: [1,2], 2</div><div class="line">Output: 3</div><div class="line">Explanation: At time point 1, Teemo starts attacking Ashe and makes Ashe be poisoned. </div><div class="line">This poisoned status will last 2 seconds until the end of time point 2. </div><div class="line">However, at the beginning of time point 2, Teemo attacks Ashe again who is already in poisoned status. </div><div class="line">Since the poisoned status won&apos;t add up together, though the second poisoning attack will still work at time point 2, it will stop at the end of time point 3. </div><div class="line">So you finally need to output 3.</div></pre></td></tr></table></figure></p>
-<h5 id="解题思路：-求解攻击的持续时间，攻击不能叠加。主要想法是：当相邻两个时刻间的间隔-gt-攻击持续时间，则可直接加上持续时间，否则，就要去掉公共部分的时间。主要利用re-Math-min-timesSeries-i-1-timeSeries-i-duration-求解，"><a href="#解题思路：-求解攻击的持续时间，攻击不能叠加。主要想法是：当相邻两个时刻间的间隔-gt-攻击持续时间，则可直接加上持续时间，否则，就要去掉公共部分的时间。主要利用re-Math-min-timesSeries-i-1-timeSeries-i-duration-求解，" class="headerlink" title="解题思路： 求解攻击的持续时间，攻击不能叠加。主要想法是：当相邻两个时刻间的间隔&gt;=攻击持续时间，则可直接加上持续时间，否则，就要去掉公共部分的时间。主要利用re + Math.min(timesSeries[i+1] - timeSeries[i], duration) 求解，"></a>解题思路： 求解攻击的持续时间，攻击不能叠加。主要想法是：当相邻两个时刻间的间隔&gt;=攻击持续时间，则可直接加上持续时间，否则，就要去掉公共部分的时间。主要利用re + Math.min(timesSeries[i+1] - timeSeries[i], duration) 求解，</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public int findPoisonedDuration(int[] timeSeries, int duration) &#123;</div><div class="line">     </div><div class="line">        if(timeSeries == null || timeSeries.length == 0 || duration &lt;= 0)</div><div class="line">            return 0;</div><div class="line">        </div><div class="line">         int re =0;</div><div class="line">        for(int i=0;i &lt; timeSeries.length -1;i++)&#123;</div><div class="line">            if(timeSeries[i] + duration &lt;= timeSeries[i+1])</div><div class="line">                re += duration;</div><div class="line">            else</div><div class="line">                re += timeSeries[i+1] - timeSeries[i];</div><div class="line">        &#125;</div><div class="line">        re += duration;</div><div class="line">        return re;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
 	
-</div>
-
-</footer>
 
 
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/01/hello-hexo/" title="JAVA基本数据类型介绍" itemprop="url">JAVA基本数据类型介绍</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Clock forest" target="_blank" itemprop="author">Clock forest</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-01T08:04:27.000Z" itemprop="datePublished"> 发表于 2017-08-01</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>byte， short， int， long， float， double， boolean， char</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/01/hello-world/" title="hello博客" itemprop="url">hello博客</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Clock forest" target="_blank" itemprop="author">Clock forest</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-01T07:45:55.964Z" itemprop="datePublished"> 发表于 2017-08-01</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>终于创建了一个自己的博客，哈哈哈哈，本博客主要记录开发中遇到的一些困难、开发技巧、面试基本知识及面试试题部分总结.</p>
-<h2 id="hexo基本命令介绍"><a href="#hexo基本命令介绍" class="headerlink" title="hexo基本命令介绍"></a>hexo基本命令介绍</h2><h3 id="创建新的博客"><a href="#创建新的博客" class="headerlink" title="创建新的博客"></a>创建新的博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h2 id="hexo-创建about页面"><a href="#hexo-创建about页面" class="headerlink" title="hexo 创建about页面"></a>hexo 创建about页面</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new page <span class="string">"about"</span></div></pre></td></tr></table></figure>
-<p>在config.xml中添加：<br>menu:<br>  home: /<br>  archives: /archives<br>  tags: /tags<br>  about: /about</p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-</div>
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、JVM类加载过程"><span class="toc-number">1.</span> <span class="toc-text">一、JVM类加载过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-JVM的类加载机制介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 JVM的类加载机制介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类的加载"><span class="toc-number">1.1.1.</span> <span class="toc-text">类的加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类的连接"><span class="toc-number">1.1.2.</span> <span class="toc-text">类的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类的初始化"><span class="toc-number">1.1.3.</span> <span class="toc-text">类的初始化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM类加载器与双亲委派模型"><span class="toc-number">1.2.</span> <span class="toc-text">JVM类加载器与双亲委派模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM类加载类型"><span class="toc-number">1.2.1.</span> <span class="toc-text">JVM类加载类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双亲委派类加载机制"><span class="toc-number">1.2.2.</span> <span class="toc-text">双亲委派类加载机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双亲委派模型的好处："><span class="toc-number">1.2.3.</span> <span class="toc-text">双亲委派模型的好处：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双亲委派模型源码"><span class="toc-number">1.2.4.</span> <span class="toc-text">双亲委派模型源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义类加载器"><span class="toc-number">1.2.5.</span> <span class="toc-text">自定义类加载器</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -567,12 +377,89 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
@@ -643,4 +530,4 @@ var _hmt = _hmt || [];
 <!-- Tiny_search End -->
 
   </body>
- </html>
+</html>
